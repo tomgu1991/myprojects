@@ -9,3 +9,6 @@ java:
   
 python:
   a folder for python file
+
+Ignore:
+  a folder for ignore
