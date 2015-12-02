@@ -8,7 +8,7 @@ import com.tomgu.util.FileReaderUtil;
 public class ParseJavaFile {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int lineNumber = 227;
 		String filePath = "./source/bug.java";
 		File file = new File(filePath);
 		System.out.println(filePath + " exist? "+file.exists());
@@ -18,7 +18,7 @@ public class ParseJavaFile {
 		codeStr = FileReaderUtil.readFileToStringByChar(filePath);
 //		System.out.println(codeStr);
 		JavaParser parser = new JavaParser();
-		parser.parse(codeStr);
+		parser.parse(codeStr,lineNumber);
 		
 		
 
