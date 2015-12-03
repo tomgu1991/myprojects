@@ -2,6 +2,7 @@ package com.tomgu.parse;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -22,6 +23,7 @@ public class JavaParser {
 		parser = ASTParser.newParser(AST.JLS8);
 	}
 
+	// tentative method to test new feature
 	public void parse(String codeStr,int lineNumber){
 		parser.setSource(codeStr.toCharArray());
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -47,12 +49,54 @@ public class JavaParser {
 			}
 		}
 		System.out.println(nodeFound.getNodeType());
+		//input position using NodeFinder
 		NodeFinder finder = new NodeFinder(cu.getRoot(), 7308, 438);
 		ASTNode result = finder.getCoveringNode();
 		System.out.println(result.getStartPosition());
 		System.out.println(result.getParent().getStartPosition());
 	}
 
+	/**
+	 * find ASTNode covering lines in java source file
+	 * @param codeStr source code
+	 * @param lineNumber target code fragments line number
+	 */
+	public void findASTNodeByLine(String codeStr, int lineNumber){
+		parser.setSource(codeStr.toCharArray());
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		//		addASTVisitorToCU(cu);
+		List list = cu.types();
+		TypeDeclaration typeNode = (TypeDeclaration) list.get(0);
+		List<BodyDeclaration> bodyNodeList = typeNode.bodyDeclarations();
+		BodyDeclaration bodyDeclarationNode;
+		int startPosition,endPosition;
+		int startLine,endLine;
+		ASTNode nodeFound = null;
+		for(int i=0;i<bodyNodeList.size();i++){
+			bodyDeclarationNode = bodyNodeList.get(i);
+			startPosition = bodyDeclarationNode.getStartPosition();
+			endPosition = startPosition + bodyDeclarationNode.getLength()-1;
+			startLine = cu.getLineNumber(startPosition);
+			endLine = cu.getLineNumber(endPosition);
+			if(startLine <= lineNumber && endLine >= lineNumber){
+				nodeFound = bodyDeclarationNode.copySubtree(cu.getAST(), bodyDeclarationNode);
+				System.out.println(startPosition);
+				break;
+			}
+		}
+		System.out.println(nodeFound.toString());
+		//input position using NodeFinder
+		NodeFinder finder = new NodeFinder(cu.getRoot(), 7308, 438);
+		ASTNode result = finder.getCoveringNode();
+		System.out.println(result.toString());
+	}
+	
+	
+	/**
+	 * add visitor to compilationUnit
+	 * @param cu
+	 */
 	private void addASTVisitorToCU(CompilationUnit cu) {
 		cu.accept(new ASTVisitor(){
 			Set<String> names = new HashSet<>();

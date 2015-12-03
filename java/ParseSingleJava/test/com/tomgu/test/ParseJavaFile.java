@@ -1,4 +1,4 @@
-package com.tomgu;
+package com.tomgu.test;
 
 import java.io.File;
 
@@ -18,7 +18,7 @@ public class ParseJavaFile {
 		codeStr = FileReaderUtil.readFileToStringByChar(filePath);
 //		System.out.println(codeStr);
 		JavaParser parser = new JavaParser();
-		parser.parse(codeStr,lineNumber);
+		parser.findASTNodeByLine(codeStr,lineNumber);
 		
 		
 
