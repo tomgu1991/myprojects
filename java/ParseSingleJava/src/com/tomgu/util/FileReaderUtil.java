@@ -48,9 +48,32 @@ public class FileReaderUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
- 
-
- 
 		return  fileData.toString();	
+	}
+	
+	public static int getPositionByLineNumber(String filePath, int lineNumber){
+		int result = 0;
+		StringBuffer buffer = new StringBuffer();
+		int lineFlag = 1;
+		try {
+			BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath));
+			String line = "";
+			while ( (line=reader.readLine()) != null ){
+				System.out.println(line);
+				System.out.println(lineFlag + ": " + result);
+				if(lineFlag == lineNumber)
+					return result;
+				result += line.toCharArray().length + 1;
+				lineFlag++;
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+		
 	}
 }
