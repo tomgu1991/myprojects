@@ -2,7 +2,6 @@ package com.tomgu.parse;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -15,6 +14,8 @@ import org.eclipse.jdt.core.dom.NodeFinder;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+
+import com.tomgu.util.FileReaderUtil;
 
 public class JavaParser {
 	private ASTParser parser;
@@ -43,7 +44,7 @@ public class JavaParser {
 			startLine = cu.getLineNumber(startPosition);
 			endLine = cu.getLineNumber(endPosition);
 			if(startLine <= lineNumber && endLine >= lineNumber){
-				nodeFound = bodyDeclarationNode.copySubtree(cu.getAST(), bodyDeclarationNode);
+				nodeFound = BodyDeclaration.copySubtree(cu.getAST(), bodyDeclarationNode);
 				System.out.println(startPosition);
 				break;
 			}
@@ -80,7 +81,7 @@ public class JavaParser {
 			startLine = cu.getLineNumber(startPosition);
 			endLine = cu.getLineNumber(endPosition);
 			if(startLine <= lineNumber && endLine >= lineNumber){
-				nodeFound = bodyDeclarationNode.copySubtree(cu.getAST(), bodyDeclarationNode);
+				nodeFound = BodyDeclaration.copySubtree(cu.getAST(), bodyDeclarationNode);
 				System.out.println(startPosition);
 				break;
 			}
@@ -90,6 +91,23 @@ public class JavaParser {
 		NodeFinder finder = new NodeFinder(cu.getRoot(), 7308, 438);
 		ASTNode result = finder.getCoveringNode();
 		System.out.println(result.toString());
+	}
+	
+	/**
+	 * find the min ASTNode covering the [position,position+length] source code fragment
+	 * @param codeStr
+	 * @param position
+	 * @param length
+	 * @return
+	 */
+	public ASTNode getMinASTNodeByPosition(String codeStr, int position, int length){
+		ASTNode result = null;
+		parser.setSource(codeStr.toCharArray());
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		NodeFinder finder = new NodeFinder(cu.getRoot(), position, length);
+		result = finder.getCoveringNode();
+		return result;
 	}
 	
 	
@@ -118,5 +136,25 @@ public class JavaParser {
 			}
 		});
 
+	}
+
+	/**
+	 * TODO return the most minimal ASTNode covering the largest lines in lines
+	 * @param filePath
+	 * @param linesRef
+	 * @return
+	 */
+	public ASTNode getMinASTNodeByLines(String filePath, int[] lines) {
+		// TODO return the most minimal ASTNode covering all the lines
+		// should compare each line's ASTNode and return the most used one
+		String codeStr = FileReaderUtil.readFileToStringByChar(filePath);
+		parser.setSource(codeStr.toCharArray());
+		parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		int position = FileReaderUtil.getPositionByLineNumber(filePath, lines[0]);
+		int length = FileReaderUtil.getLineLength(filePath, lines[0]);
+		NodeFinder finder = new NodeFinder(cu.getRoot(), position, length);
+		ASTNode result = finder.getCoveringNode();
+		return result;
 	}
 }

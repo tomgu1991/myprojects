@@ -1,11 +1,11 @@
-package com.tomgu.test;
+package com.tomgu.test.parse;
 
 import java.io.File;
 
 import com.tomgu.parse.JavaParser;
 import com.tomgu.util.FileReaderUtil;
 
-public class ParseJavaFile {
+public class TestParseJavaFile {
 
 	public static void main(String[] args) {
 		int lineNumber = 227;

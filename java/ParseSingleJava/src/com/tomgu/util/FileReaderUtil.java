@@ -17,10 +17,10 @@ public class FileReaderUtil {
 			}
 			result = buffer.toString();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return result;
@@ -42,10 +42,10 @@ public class FileReaderUtil {
 	 
 			reader.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		}
 		return  fileData.toString();	
@@ -59,21 +59,41 @@ public class FileReaderUtil {
 			BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath));
 			String line = "";
 			while ( (line=reader.readLine()) != null ){
-				System.out.println(line);
-				System.out.println(lineFlag + ": " + result);
 				if(lineFlag == lineNumber)
 					return result;
 				result += line.toCharArray().length + 1;
 				lineFlag++;
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		}
 		return result;
 		
+	}
+
+	public static int getLineLength(String filePath, int lineNumber) {
+		int result = 0;
+		StringBuffer buffer = new StringBuffer();
+		int lineFlag = 0;
+		try {
+			BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath));
+			String line = "";
+			while ( (line=reader.readLine()) != null ){
+				lineFlag++;
+				if(lineFlag == lineNumber)
+					return line.toCharArray().length;
+			}
+		} catch (FileNotFoundException e) {
+			// 
+			e.printStackTrace();
+		} catch (IOException e) {
+			// 
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
