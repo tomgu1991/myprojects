@@ -1,18 +1,19 @@
 package com.tomgu.entity;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Statement;
 
 public class StatementMappingElement{
-	private Statement ref;
-	private Statement tar;
-	public StatementMappingElement(Statement ref, Statement tar){
+	private ASTNode ref;
+	private ASTNode tar;
+	public StatementMappingElement(ASTNode ref, ASTNode tar){
 		this.ref = ref;
 		this.tar = tar;
 	}
-	public Statement getRef() {
+	public ASTNode getRef() {
 		return ref;
 	}
-	public Statement getTar() {
+	public ASTNode getTar() {
 		return tar;
 	}
 

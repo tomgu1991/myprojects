@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
 
@@ -23,7 +24,8 @@ public class TestGetPositionByLineNumber {
 		System.out.println("length is: "+length );
 		JavaParser parser = new JavaParser();
 		String codeStr = TestFileReaderUtil.getSourceCode(filePath);
-		ASTNode node = parser.getMinASTNodeByPosition(codeStr, position, length);
+		CompilationUnit cu = parser.parseCompilationUnit(filePath);
+		ASTNode node = parser.getMinASTNodeByPosition(cu, position, length);
 //		System.out.println(node.toString());
 		System.out.println(node.getNodeType() == ASTNode.BLOCK);
 		Block bNode = (Block)node;

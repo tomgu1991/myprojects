@@ -1,4 +1,4 @@
-package com.tomgu.util.statement;
+package com.tomgu.util.astnode.statement;
 
 import java.util.List;
 
@@ -9,11 +9,12 @@ public class BlockOperator {
 
 	/**
 	 * TODO get block node all sub statements
+	 * in IF return inflxExpression
+	 * in Metho return method parameter
 	 * @param node
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static List<Statement> getStatementList(Block node) {
+	public static List getStatementList(Block node) {
 		return node.statements();
 	}
 }
