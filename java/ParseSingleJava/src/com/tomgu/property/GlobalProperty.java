@@ -1,6 +1,16 @@
 package com.tomgu.property;
 
 public interface GlobalProperty {
+	/**
+	 * get ASTNode type to build CBASTNode
+	 * 0 ASTNode
+	 * 1 Statement
+	 * 2 Expression
+	 */
+	public final int CBASTNodeType = 0;
+	public final int CBStatmentType = 1;
+	public final int CBExpressionType = 2;
+	
 	public final double SIMILARITY = 0.75;
 	
 	public final String IDRBug = "Inconsistent Direct Renaming Bug";

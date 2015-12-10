@@ -85,8 +85,8 @@ public class StatementOperator {
 			StatementMappingElement e){
 		ASTNode ref = e.getRef();
 		ASTNode tar = e.getTar();
-		AbstractCBASTNode refCBASTNode = CBASTNodeBuilder.buildCBASTNode(ref);
-		AbstractCBASTNode tarCBASTNode = CBASTNodeBuilder.buildCBASTNode(tar);
+		AbstractCBASTNode refCBASTNode = CBASTNodeBuilder.build(ref);
+		AbstractCBASTNode tarCBASTNode = CBASTNodeBuilder.build(tar);
 		refCBASTNode.mapTokens(tarCBASTNode, map);
 		
 	}
