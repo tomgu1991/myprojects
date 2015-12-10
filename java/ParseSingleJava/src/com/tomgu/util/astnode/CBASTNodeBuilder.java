@@ -1,8 +1,10 @@
 package com.tomgu.util.astnode;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
@@ -11,11 +13,13 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
+import com.tomgu.entity.astnode.expression.CBAssignment;
 import com.tomgu.entity.astnode.expression.CBCastExpression;
 import com.tomgu.entity.astnode.expression.CBExpression;
 import com.tomgu.entity.astnode.expression.CBMethodInvocation;
 import com.tomgu.entity.astnode.expression.CBName;
 import com.tomgu.entity.astnode.expression.CBParenthesizedExpression;
+import com.tomgu.entity.astnode.statement.CBExpressionStatement;
 import com.tomgu.entity.astnode.statement.CBStatement;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
 import com.tomgu.property.GlobalProperty;
@@ -32,6 +36,9 @@ public class CBASTNodeBuilder {
 		case ASTNode.VARIABLE_DECLARATION_STATEMENT:
 			result = new CBVariableDeclarationStatement((VariableDeclarationStatement) node);
 			break;
+		case ASTNode.EXPRESSION_STATEMENT:
+			result = new CBExpressionStatement((ExpressionStatement)node);
+			break;
 		default:
 			result = new CBStatement(node);
 		}
@@ -41,6 +48,9 @@ public class CBASTNodeBuilder {
 	public static CBExpression buildCBExpression(Expression node){
 		CBExpression result;
 		switch(node.getNodeType()){
+		case Expression.ASSIGNMENT:
+			result = new CBAssignment((Assignment)node);
+			break;
 		case Expression.CAST_EXPRESSION:
 			result = new CBCastExpression((CastExpression)node);
 			break;

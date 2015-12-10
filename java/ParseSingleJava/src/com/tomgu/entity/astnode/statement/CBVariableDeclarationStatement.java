@@ -15,6 +15,7 @@ import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
 import com.tomgu.entity.astnode.variabledeclaration.CBVariableDeclaratrionFragment;
 import com.tomgu.entity.astnode.visitor.CBVariableDeclarationStatementVisitor;
+import com.tomgu.util.MapUtil;
 
 public class CBVariableDeclarationStatement extends CBStatement {
 	private Type type;
@@ -31,6 +32,7 @@ public class CBVariableDeclarationStatement extends CBStatement {
 		}
 	}
 
+	
 	/**
 	 * VariableDeclarationStatement mapTokens
 	 * map type
@@ -38,8 +40,49 @@ public class CBVariableDeclarationStatement extends CBStatement {
 	 */
 	@Override
 	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+		if(! (tar instanceof CBVariableDeclarationStatement) ){
+			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			return;
+		}
+		
+		CBVariableDeclarationStatement tarTem = (CBVariableDeclarationStatement)tar;
+		// map type
+		MapUtil.addTokenMapping(map, type.toString(), tarTem.getType().toString());
+		int minSize = fragmentList.size();
+		if(tarTem.fragmentList.size()<minSize)
+			minSize = tarTem.fragmentList.size();
+		for(int index = 0;index< minSize;index++){
+			fragmentList.get(index).mapTokens(tarTem.fragmentList.get(index), map);
+		}
+		
+	}
+
+	
+	
+
+	/* (non-Javadoc)
+	 * @see com.tomgu.entity.astnode.CBASTNode#toCBString()
+	 */
+	@Override
+	public String toCBString() {
 		// TODO Auto-generated method stub
-		super.mapTokens(tar, map);
+		return super.toCBString();
+	}
+
+
+	/**
+	 * @return the type
+	 */
+	public Type getType() {
+		return type;
+	}
+
+
+	/**
+	 * @return the fragmentList
+	 */
+	public List<CBVariableDeclaratrionFragment> getFragmentList() {
+		return fragmentList;
 	}
 
 	

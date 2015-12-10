@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import com.tomgu.util.MapUtil;
+
 public class CBASTNode extends AbstractCBASTNode {
 
 	public CBASTNode(ASTNode n) {
@@ -14,19 +16,10 @@ public class CBASTNode extends AbstractCBASTNode {
 
 	@Override
 	public void mapTokens(AbstractCBASTNode tar, Map<String,List> map) {
-		// TODO Auto-generated method stub
-		if(map.containsKey(node.toString())){
-			List list = map.get(toCBString());
-			if(!list.contains(tar.toCBString()))
-				list.add(tar.toCBString());	
-		}
-		else{
-			List<String> list = new ArrayList<>();
-			list.add(tar.toCBString());
-			map.put(toCBString(),list);
-			
-		}
+		MapUtil.addTokenMapping(map, toCBString(), tar.toCBString());
+
 	}
+	
 	@Override
 	public String toCBString() {
 		// TODO Auto-generated method stub

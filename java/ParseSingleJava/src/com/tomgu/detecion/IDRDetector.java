@@ -39,6 +39,7 @@ public class IDRDetector {
 		// TODO get token mapping relationship
 		Map<String,List> tokenMap = new HashMap<>();
 		buildMapping(tokenMap,mappingList);
+		
 		IDRReportElement reportElement = checkMap(tokenMap);
 
 		if(reportElement != null){
@@ -55,14 +56,17 @@ public class IDRDetector {
 	 * @return
 	 */
 	private static IDRReportElement checkMap(Map<String, List> tokenMap) {		
+		List<IDRReportElement> list = new ArrayList<IDRReportElement>();
 		for(String key: tokenMap.keySet()){
 			if(tokenMap.get(key).size() >= 2){
 				IDRReportElement ele = new IDRReportElement();
 				ele.ref = key;
 				ele.tarList = tokenMap.get(key);
-				return ele;
+				list.add(ele);
 			}
 		}
+		if(list.size() == 1)
+			return list.get(0);
 		return null;
 	}
 
