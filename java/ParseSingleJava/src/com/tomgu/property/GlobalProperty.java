@@ -20,12 +20,17 @@ public interface GlobalProperty {
 	 * for log
 	 */
 	public final String IDRBug = "Inconsistent Direct Renaming Bug";
-	public final String GETCLONEPAIR = "Get Clone Pair from Clone Detection Result Set";
-	public final String GETSMALLESTASTNODE = "Get Clone code fragment smallest ASTNode";
+	public final String GETCLONEPAIR = "Getting Clone Pair from Clone Detection Result Set";
+	public final String GETSMALLESTASTNODE = "Getting Clone code fragment smallest ASTNode";
 	public final String DETECTINGIDRBUG = "Detecting Inconsistent Direct Renaming Bug";
 	public final String REPORTDETECTIONRESULT = "Report clone code bug detection result";
-	public final String SEPARATOR = "********************";
-
+	
+	public final String EXTRACTSTATEMENT = "Extracting statements";
+	public final String MAPPINGSTATEMENT = "Mapping statements";
+	public final String BUILDINGIDRTOKINMPAS = "Building IDR token map";
+	public final String CHECKINGIDRINCONSISTENtBUGS = "Checking IDR inconsistent bugs";
+	public final String SUBSEPARATOR = "-----";
+	public final String SEPARATOR = "******************************";
 
 
 
