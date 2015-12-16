@@ -32,8 +32,13 @@ public class TestIDRDetector {
 		// TODO get detection result
 		GlobalLog.LogProcess(GlobalProperty.DETECTINGIDRBUG);
 		String result = IDRDetector.IDRDetection(nodeRef, nodeTar);
-		System.out.println(result);
-
+		
+		//TODO print detection result
+		if(result != null){
+			GlobalLog.LogProcess(GlobalProperty.REPORTDETECTIONRESULT);
+			GlobalLog.LogBugResult(result);	
+		}
+		
 	}
 
 }

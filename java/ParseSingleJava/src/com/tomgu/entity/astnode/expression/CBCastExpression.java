@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Type;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.util.MapUtil;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
@@ -25,20 +26,23 @@ public class CBCastExpression extends CBExpression {
 	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map)
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		// ASTNode type not match
 		if(! (tar instanceof CBCastExpression)){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		
 		CBCastExpression temTar = (CBCastExpression)tar;
 		
 		// map type
-		MapUtil.addTokenMapping(map, type.toString(), temTar.getType().toString());
+		MapUtil.addTokenMapping(tokenMap, type.toString(), temTar.getType().toString()
+				,nodemap,e);
 		
 		// map expression
-		expression.mapTokens(temTar.getExpression(), map);
+		expression.mapTokens(temTar.getExpression(), tokenMap,nodemap,e);
 	}
 
 	/* (non-Javadoc)

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
 import com.tomgu.entity.astnode.variabledeclaration.CBVariableDeclaratrionFragment;
@@ -29,10 +30,12 @@ public class CBMethodInvocation extends CBExpression {
 	}
 
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		// ASTNode type not match
 		if(! (tar instanceof CBMethodInvocation)){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		
@@ -45,15 +48,15 @@ public class CBMethodInvocation extends CBExpression {
 //			return;
 //		}
 		
-		MapUtil.addTokenMapping(map, name, temTar.getName());
+		MapUtil.addTokenMapping(tokenMap, name, temTar.getName(),nodemap,e);
 		
-		expression.mapTokens(temTar.getExpression(), map);
+		expression.mapTokens(temTar.getExpression(), tokenMap,nodemap,e);
 		
 		int minSize = arguments.size();
 		if(temTar.arguments.size()<minSize)
 			minSize = temTar.arguments.size();
 		for(int index=0;index<minSize;index++)
-			arguments.get(index).mapTokens(temTar.getArguments().get(index), map);
+			arguments.get(index).mapTokens(temTar.getArguments().get(index), tokenMap,nodemap,e);
 	}
 
 	/* (non-Javadoc)

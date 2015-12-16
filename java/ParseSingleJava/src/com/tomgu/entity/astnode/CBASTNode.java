@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.util.MapUtil;
 
 public class CBASTNode extends AbstractCBASTNode {
@@ -15,8 +16,9 @@ public class CBASTNode extends AbstractCBASTNode {
 	}
 
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String,List> map) {
-		MapUtil.addTokenMapping(map, toCBString(), tar.toCBString());
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
+		MapUtil.addTokenMapping(tokenMap, toCBString(), tar.toCBString(),nodemap,e);
 
 	}
 	

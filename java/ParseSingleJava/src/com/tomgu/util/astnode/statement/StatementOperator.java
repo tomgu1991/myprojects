@@ -7,7 +7,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Statement;
 
-import com.tomgu.entity.StatementMappingElement;
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.property.GlobalProperty;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
@@ -25,9 +25,9 @@ public class StatementOperator {
 	 * @param stListTar
 	 * @return
 	 */
-	public static List<StatementMappingElement> getMappingList(
+	public static List<ASTNodeMappingElement> getMappingList(
 			List<ASTNode> stListRef, List<ASTNode> stListTar) {
-		List<StatementMappingElement> list = new ArrayList<StatementMappingElement>();
+		List<ASTNodeMappingElement> list = new ArrayList<ASTNodeMappingElement>();
 		
 		//calculate similarity
 		double[][] similarity = new double[stListRef.size()][stListTar.size()];
@@ -64,10 +64,10 @@ public class StatementOperator {
 		}
 		
 		// build StatmentMappingElement
-		StatementMappingElement element;
+		ASTNodeMappingElement element;
 		for(int indexMap=0;indexMap<mapResult.length;indexMap++){
 			if(mapResult[indexMap] >= 0){
-				element = new StatementMappingElement(
+				element = new ASTNodeMappingElement(
 						stListRef.get(indexMap),
 						stListTar.get(mapResult[indexMap]));
 				list.add(element);
@@ -76,18 +76,5 @@ public class StatementOperator {
 		return list;
 	}
 
-	/**
-	 * mapping clone node pair tokens
-	 * @param map
-	 * @param e
-	 */
-	public static void getStatementTokenMapping(Map<String, List> map,
-			StatementMappingElement e){
-		ASTNode ref = e.getRef();
-		ASTNode tar = e.getTar();
-		AbstractCBASTNode refCBASTNode = CBASTNodeBuilder.build(ref);
-		AbstractCBASTNode tarCBASTNode = CBASTNodeBuilder.build(tar);
-		refCBASTNode.mapTokens(tarCBASTNode, map);
-		
-	}
+
 }

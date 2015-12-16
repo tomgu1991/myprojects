@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
 import com.tomgu.entity.astnode.expression.CBExpression;
@@ -29,14 +30,16 @@ public class CBVariableDeclaratrionFragment extends CBVariableDeclaration {
 	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map)
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		if(! (tar instanceof CBVariableDeclaratrionFragment) ){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		CBVariableDeclaratrionFragment temTar = (CBVariableDeclaratrionFragment)tar;
-		MapUtil.addTokenMapping(map, name, temTar.getName());
-		initializer.mapTokens(temTar.getInitializer(), map);
+		MapUtil.addTokenMapping(tokenMap, name, temTar.getName(),nodemap,e);
+		initializer.mapTokens(temTar.getInitializer(), tokenMap,nodemap,e);
 	}
 	
 	/* (non-Javadoc)

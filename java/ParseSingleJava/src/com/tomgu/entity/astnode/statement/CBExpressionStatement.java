@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.Statement;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.expression.CBExpression;
 import com.tomgu.util.MapUtil;
@@ -22,14 +23,16 @@ public class CBExpressionStatement extends CBStatement {
 	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map)
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		if(! (tar instanceof CBExpressionStatement) ){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		
 		CBExpressionStatement tarTem = (CBExpressionStatement)tar;
-		expression.mapTokens(tarTem.getExpression(), map);
+		expression.mapTokens(tarTem.getExpression(), tokenMap,nodemap,e);
 	}
 	/* (non-Javadoc)
 	 * @see com.tomgu.entity.astnode.CBASTNode#toCBString()

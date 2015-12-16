@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.eclipse.jdt.internal.compiler.ast.ArrayAllocationExpression;
 
-import com.tomgu.entity.StatementMappingElement;
-
 /**
  * TODO IDR report element, record refStatement and tarStatement and potential error
  * @author guzuxing

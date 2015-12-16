@@ -1,11 +1,14 @@
 package com.tomgu.util.astnode;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Statement;
 
+import com.tomgu.entity.ASTNodeMappingElement;
+import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.util.astnode.statement.BlockOperator;
 
 public class ASTNodeOperator {
@@ -22,6 +25,22 @@ public class ASTNodeOperator {
 		default:
 			return null;
 		}
+		
+	}
+	
+	/**
+	 * mapping clone node pair tokens
+	 * @param map
+	 * @param nodeMap 
+	 * @param e
+	 */
+	public static void getASTNodeTokenMapping(Map<String, List> tokenMap,
+			Map<String, List<ASTNodeMappingElement>> nodeMap, ASTNodeMappingElement e){
+		ASTNode ref = e.getRef();
+		ASTNode tar = e.getTar();
+		AbstractCBASTNode refCBASTNode = CBASTNodeBuilder.build(ref);
+		AbstractCBASTNode tarCBASTNode = CBASTNodeBuilder.build(tar);
+		refCBASTNode.mapTokens(tarCBASTNode, tokenMap,nodeMap,e);
 		
 	}
 	

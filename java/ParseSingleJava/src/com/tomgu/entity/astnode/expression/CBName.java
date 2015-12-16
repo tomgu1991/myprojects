@@ -6,6 +6,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Name;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.util.MapUtil;
 
@@ -21,17 +22,19 @@ public class CBName extends CBExpression {
 	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map)
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		// ASTNode type not match
 		if(! (tar instanceof CBName)){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		
 		CBName temTar = (CBName)tar;
 		
-		MapUtil.addTokenMapping(map, name.getFullyQualifiedName(), 
-				temTar.getName().getFullyQualifiedName());
+		MapUtil.addTokenMapping(tokenMap, name.getFullyQualifiedName(), 
+				temTar.getName().getFullyQualifiedName(),nodemap,e);
 	}
 
 	/* (non-Javadoc)

@@ -38,6 +38,8 @@ public class JavaParser {
 		parser.setSource(codeStr.toCharArray());
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+		
+		
 		return cu;
 	}
 

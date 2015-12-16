@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
 import com.tomgu.entity.astnode.variabledeclaration.CBVariableDeclaratrionFragment;
@@ -39,20 +40,26 @@ public class CBVariableDeclarationStatement extends CBStatement {
 	 * map fragmentList
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String, List> map) {
+	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
+			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
 		if(! (tar instanceof CBVariableDeclarationStatement) ){
-			MapUtil.addTokenMapping(map,toCBString(),tar.toCBString());
+			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
+					,nodemap,e);
 			return;
 		}
 		
 		CBVariableDeclarationStatement tarTem = (CBVariableDeclarationStatement)tar;
 		// map type
-		MapUtil.addTokenMapping(map, type.toString(), tarTem.getType().toString());
+		MapUtil.addTokenMapping(tokenMap, type.toString(), tarTem.getType().toString()
+				,nodemap,e);
+		// map fragments
+		//TODO if size not match only compare the same size items
 		int minSize = fragmentList.size();
 		if(tarTem.fragmentList.size()<minSize)
 			minSize = tarTem.fragmentList.size();
 		for(int index = 0;index< minSize;index++){
-			fragmentList.get(index).mapTokens(tarTem.fragmentList.get(index), map);
+			fragmentList.get(index).mapTokens(tarTem.fragmentList.get(index), tokenMap,
+					nodemap,e);
 		}
 		
 	}

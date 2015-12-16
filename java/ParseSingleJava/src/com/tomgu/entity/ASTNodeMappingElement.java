@@ -3,10 +3,10 @@ package com.tomgu.entity;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Statement;
 
-public class StatementMappingElement{
+public class ASTNodeMappingElement{
 	private ASTNode ref;
 	private ASTNode tar;
-	public StatementMappingElement(ASTNode ref, ASTNode tar){
+	public ASTNodeMappingElement(ASTNode ref, ASTNode tar){
 		this.ref = ref;
 		this.tar = tar;
 	}

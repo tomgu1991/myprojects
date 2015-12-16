@@ -8,7 +8,7 @@ import java.util.Map;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Statement;
 
-import com.tomgu.entity.StatementMappingElement;
+import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.property.GlobalProperty;
 import com.tomgu.report.GenerateBugReport;
 import com.tomgu.report.entity.IDRReportElement;
@@ -34,11 +34,12 @@ public class IDRDetector {
 		List stListTar = ASTNodeOperator.getASTNodeBodyStatementList(nodeTar);
 
 		// TODO get statement mapping
-		List<StatementMappingElement> mappingList = StatementOperator.getMappingList(stListRef,stListTar);
+		List<ASTNodeMappingElement> mappingList = StatementOperator.getMappingList(stListRef,stListTar);
 
 		// TODO get token mapping relationship
 		Map<String,List> tokenMap = new HashMap<>();
-		buildMapping(tokenMap,mappingList);
+		Map<String,List<ASTNodeMappingElement>> nodeMap = new HashMap<>();
+		buildMapping(tokenMap,nodeMap,mappingList);
 		
 		IDRReportElement reportElement = checkMap(tokenMap);
 
@@ -74,18 +75,16 @@ public class IDRDetector {
 	 * TODO generate token map
 	 * Token(ref) : token1,token2(tar)
 	 * @param tokenMap
+	 * @param nodeMap 
 	 * @param mappingList
 	 */
 	private static void buildMapping(Map<String, List> tokenMap,
-			List<StatementMappingElement> mappingList) {
-		StatementMappingElement e;
+			Map<String, List<ASTNodeMappingElement>> nodeMap, List<ASTNodeMappingElement> mappingList) {
+		ASTNodeMappingElement e;
 		for(int index=0;index<mappingList.size();index++){
 			e = mappingList.get(index);
-			StatementOperator.getStatementTokenMapping(tokenMap, e);
+			ASTNodeOperator.getASTNodeTokenMapping(tokenMap,nodeMap, e);
 		}
 		
-//		tokenMap.put("rhsName", new ArrayList<String>());
-//		tokenMap.get("rhsName").add("rhsType");
-//		tokenMap.get("rhsName").add("lhsType");
 	}
 }
