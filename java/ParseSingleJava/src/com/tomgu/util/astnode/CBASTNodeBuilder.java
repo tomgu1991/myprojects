@@ -1,6 +1,7 @@
 package com.tomgu.util.astnode;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.Expression;
@@ -13,6 +14,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
+import com.tomgu.entity.astnode.expression.CBArrayAccess;
 import com.tomgu.entity.astnode.expression.CBAssignment;
 import com.tomgu.entity.astnode.expression.CBCastExpression;
 import com.tomgu.entity.astnode.expression.CBExpression;
@@ -30,7 +32,7 @@ public class CBASTNodeBuilder {
 	 * @param node
 	 * @return
 	 */
-	public static CBStatement buildCBStatement(Statement node){
+	private static CBStatement buildCBStatement(Statement node){
 		CBStatement result;
 		switch(node.getNodeType()){
 		case ASTNode.VARIABLE_DECLARATION_STATEMENT:
@@ -45,9 +47,11 @@ public class CBASTNodeBuilder {
 		return result;
 	}
 	
-	public static CBExpression buildCBExpression(Expression node){
+	private static CBExpression buildCBExpression(Expression node){
 		CBExpression result;
 		switch(node.getNodeType()){
+		case Expression.ARRAY_ACCESS:
+			result = new CBArrayAccess((ArrayAccess)node);
 		case Expression.ASSIGNMENT:
 			result = new CBAssignment((Assignment)node);
 			break;
@@ -71,7 +75,7 @@ public class CBASTNodeBuilder {
 		
 	}
 	
-	public static CBASTNode buildCBANode(ASTNode node){
+	private static CBASTNode buildCBANode(ASTNode node){
 		CBASTNode result;
 		switch(node.getNodeType()){
 		default:
@@ -88,7 +92,7 @@ public class CBASTNodeBuilder {
 	 * @param node
 	 * @return
 	 */
-	public static int getASTNodeType(ASTNode node){
+	private static int getASTNodeType(ASTNode node){
 		int result;
 		if(node instanceof Statement){
 			result = GlobalProperty.CBStatmentType;

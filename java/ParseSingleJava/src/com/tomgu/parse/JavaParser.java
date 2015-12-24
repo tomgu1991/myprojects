@@ -90,6 +90,20 @@ public class JavaParser {
 		return result;
 	}
 	
+	/**
+	 * return line covered minist astnode in filepath
+	 * @param filePath
+	 * @param cu
+	 * @param line
+	 * @return astnode
+	 */
+	public ASTNode getMinCoveredASTNode(String filePath, CompilationUnit cu,int line){
+		int position = FileReaderUtil.getPositionByLineNumber(filePath, line);
+		int length = FileReaderUtil.getLineLength(filePath, line);
+		NodeFinder finder = new NodeFinder(cu.getRoot(), position, length);
+		ASTNode result = finder.getCoveredNode();
+		return result;	
+	}
 	
 	/**
 	 * add visitor to compilationUnit
