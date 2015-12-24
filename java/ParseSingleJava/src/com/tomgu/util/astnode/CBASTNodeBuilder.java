@@ -3,6 +3,7 @@ package com.tomgu.util.astnode;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
@@ -16,6 +17,7 @@ import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
 import com.tomgu.entity.astnode.expression.CBArrayAccess;
 import com.tomgu.entity.astnode.expression.CBAssignment;
+import com.tomgu.entity.astnode.expression.CBBooleanLiteral;
 import com.tomgu.entity.astnode.expression.CBCastExpression;
 import com.tomgu.entity.astnode.expression.CBExpression;
 import com.tomgu.entity.astnode.expression.CBMethodInvocation;
@@ -54,6 +56,9 @@ public class CBASTNodeBuilder {
 			result = new CBArrayAccess((ArrayAccess)node);
 		case Expression.ASSIGNMENT:
 			result = new CBAssignment((Assignment)node);
+			break;
+		case ExpressionStatement.BOOLEAN_LITERAL:
+			result = new CBBooleanLiteral((BooleanLiteral)node);
 			break;
 		case Expression.CAST_EXPRESSION:
 			result = new CBCastExpression((CastExpression)node);
