@@ -5,11 +5,20 @@ import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CharacterLiteral;
+import org.eclipse.jdt.core.dom.ConditionalExpression;
 import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.FieldAccess;
+import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.InstanceofExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.NullLiteral;
+import org.eclipse.jdt.core.dom.NumberLiteral;
 import org.eclipse.jdt.core.dom.ParenthesizedExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -19,10 +28,19 @@ import com.tomgu.entity.astnode.expression.CBArrayAccess;
 import com.tomgu.entity.astnode.expression.CBAssignment;
 import com.tomgu.entity.astnode.expression.CBBooleanLiteral;
 import com.tomgu.entity.astnode.expression.CBCastExpression;
+import com.tomgu.entity.astnode.expression.CBCharacterLiteral;
+import com.tomgu.entity.astnode.expression.CBConditionalExpression;
 import com.tomgu.entity.astnode.expression.CBExpression;
+import com.tomgu.entity.astnode.expression.CBFieldAccess;
+import com.tomgu.entity.astnode.expression.CBInfixExpression;
+import com.tomgu.entity.astnode.expression.CBInstanceofExpression;
 import com.tomgu.entity.astnode.expression.CBMethodInvocation;
 import com.tomgu.entity.astnode.expression.CBName;
+import com.tomgu.entity.astnode.expression.CBNullLiteral;
+import com.tomgu.entity.astnode.expression.CBNumberLiteral;
 import com.tomgu.entity.astnode.expression.CBParenthesizedExpression;
+import com.tomgu.entity.astnode.expression.CBPostfixExpression;
+import com.tomgu.entity.astnode.expression.CBPrefixExpression;
 import com.tomgu.entity.astnode.statement.CBExpressionStatement;
 import com.tomgu.entity.astnode.statement.CBStatement;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
@@ -63,6 +81,21 @@ public class CBASTNodeBuilder {
 		case Expression.CAST_EXPRESSION:
 			result = new CBCastExpression((CastExpression)node);
 			break;
+		case Expression.CHARACTER_LITERAL:
+			result = new CBCharacterLiteral((CharacterLiteral)node);
+			break;
+		case Expression.CONDITIONAL_EXPRESSION:
+			result = new CBConditionalExpression((ConditionalExpression)node);
+			break;
+		case Expression.FIELD_ACCESS:
+			result = new CBFieldAccess((FieldAccess)node);
+			break;
+		case Expression.INFIX_EXPRESSION:
+			result = new CBInfixExpression((InfixExpression)node);
+			break;
+		case Expression.INSTANCEOF_EXPRESSION:
+			result = new CBInstanceofExpression((InstanceofExpression)node);
+			break;
 		case Expression.METHOD_INVOCATION:
 			result = new CBMethodInvocation((MethodInvocation)node);
 			break;
@@ -70,8 +103,20 @@ public class CBASTNodeBuilder {
 		case Expression.SIMPLE_NAME:
 			result = new CBName((Name) node);
 			break;
+		case Expression.NULL_LITERAL:
+			result = new CBNullLiteral((NullLiteral) node);
+			break;
+		case Expression.NUMBER_LITERAL:
+			result = new CBNumberLiteral( (NumberLiteral) node);
+			break;
 		case Expression.PARENTHESIZED_EXPRESSION:
 			result = new CBParenthesizedExpression((ParenthesizedExpression)node);
+			break;
+		case Expression.POSTFIX_EXPRESSION:
+			result = new CBPostfixExpression((PostfixExpression) node);
+			break;
+		case Expression.PREFIX_EXPRESSION:
+			result = new CBPrefixExpression((PrefixExpression) node);
 			break;
 		default:
 			result = new CBExpression(node);

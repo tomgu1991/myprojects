@@ -52,11 +52,15 @@ public class CBMethodInvocation extends CBExpression {
 		
 		expression.mapTokens(temTar.getExpression(), tokenMap,nodemap,e);
 		
-		int minSize = arguments.size();
-		if(temTar.arguments.size()<minSize)
-			minSize = temTar.arguments.size();
-		for(int index=0;index<minSize;index++)
-			arguments.get(index).mapTokens(temTar.getArguments().get(index), tokenMap,nodemap,e);
+		if(name.equals(temTar.getName()) || arguments.size() == temTar.getArguments().size()){
+			for(int index=0;index<arguments.size();index++)
+				arguments.get(index).mapTokens(temTar.getArguments().get(index), tokenMap,nodemap,e);
+		}
+		else{
+			//TODO if not the same method and size of arguments differ how to deal with the arguments
+		}
+		
+		
 	}
 
 	/* (non-Javadoc)

@@ -25,6 +25,12 @@ public class TestCBExpression {
 		boolean bV;
 		bV= true;
 		
+		char c;
+		c = 'c';
+		
+		index = c == 'd' ? 1+2 : 3*4;
+
+		
 		String filePath = "./test/com/tomgu/test/parse/TestCBExpression.java";
 		JavaParser parser = new JavaParser();
 		CompilationUnit cuRef = parser.parseCompilationUnit(filePath);

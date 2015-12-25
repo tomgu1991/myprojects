@@ -3,25 +3,27 @@ package com.tomgu.entity.astnode.expression;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.FieldAccess;
 
 import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.util.MapUtil;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
+
 /**
+ * TODO need test
  * @author guzuxing
  *
  */
-public class CBArrayAccess extends CBExpression {
-	private CBExpression array;
-	private CBExpression index;
-
-	public CBArrayAccess(ArrayAccess n) {
+public class CBFieldAccess extends CBExpression {
+	private CBExpression expression;
+	private CBName fieldName;
+	
+	public CBFieldAccess(FieldAccess n) {
 		super(n);
-		array = (CBExpression) CBASTNodeBuilder.build(n.getArray());
-		index = (CBExpression) CBASTNodeBuilder.build(n.getIndex());
+		expression = (CBExpression) CBASTNodeBuilder.build(n.getExpression());
+		fieldName = (CBName) CBASTNodeBuilder.build(n.getName());
 	}
 
 	/* (non-Javadoc)
@@ -31,18 +33,15 @@ public class CBArrayAccess extends CBExpression {
 	public void mapTokens(AbstractCBASTNode tar, Map<String, List> tokenMap,
 			Map<String, List<ASTNodeMappingElement>> nodemap,
 			ASTNodeMappingElement e) {
-		
-		if(! (tar instanceof CBArrayAccess)){
+		if(! (tar instanceof CBFieldAccess)){
 			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
 					,nodemap,e);
 			return;
 		}
-
-		CBArrayAccess temTar = (CBArrayAccess)tar;
-		//getArray expression
-		array.mapTokens(temTar.getArray(), tokenMap,nodemap,e);
-		//index expression
-		index.mapTokens(temTar.getIndex(), tokenMap, nodemap, e);
+		
+		CBFieldAccess temTar = (CBFieldAccess)tar;
+		expression.mapTokens(temTar.getExpression(), tokenMap, nodemap, e);
+		fieldName.mapTokens(temTar.getFieldName(), tokenMap, nodemap, e);
 	}
 
 	/* (non-Javadoc)
@@ -55,18 +54,19 @@ public class CBArrayAccess extends CBExpression {
 	}
 
 	/**
-	 * @return the getArray
+	 * @return the expression
 	 */
-	public CBExpression getArray() {
-		return array;
+	public CBExpression getExpression() {
+		return expression;
 	}
 
 	/**
-	 * @return the getIndex
+	 * @return the fieldName
 	 */
-	public CBExpression getIndex() {
-		return index;
+	public CBName getFieldName() {
+		return fieldName;
 	}
-
+	
+	
 
 }

@@ -3,27 +3,27 @@ package com.tomgu.entity.astnode.expression;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.dom.ArrayAccess;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.InstanceofExpression;
 
 import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.util.MapUtil;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
+
 /**
+ * TODO need test
  * @author guzuxing
  *
  */
-public class CBArrayAccess extends CBExpression {
-	private CBExpression array;
-	private CBExpression index;
-
-	public CBArrayAccess(ArrayAccess n) {
+public class CBInstanceofExpression extends CBExpression {
+	private CBExpression expression;
+	private String type;
+	public CBInstanceofExpression(InstanceofExpression n) {
 		super(n);
-		array = (CBExpression) CBASTNodeBuilder.build(n.getArray());
-		index = (CBExpression) CBASTNodeBuilder.build(n.getIndex());
+		expression = (CBExpression) CBASTNodeBuilder.build(n.getLeftOperand());
+		type = n.getRightOperand().toString();
 	}
-
 	/* (non-Javadoc)
 	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map, java.util.Map, com.tomgu.entity.ASTNodeMappingElement)
 	 */
@@ -31,20 +31,16 @@ public class CBArrayAccess extends CBExpression {
 	public void mapTokens(AbstractCBASTNode tar, Map<String, List> tokenMap,
 			Map<String, List<ASTNodeMappingElement>> nodemap,
 			ASTNodeMappingElement e) {
-		
-		if(! (tar instanceof CBArrayAccess)){
+		if(! (tar instanceof CBInstanceofExpression)){
 			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
 					,nodemap,e);
 			return;
 		}
 
-		CBArrayAccess temTar = (CBArrayAccess)tar;
-		//getArray expression
-		array.mapTokens(temTar.getArray(), tokenMap,nodemap,e);
-		//index expression
-		index.mapTokens(temTar.getIndex(), tokenMap, nodemap, e);
+		CBInstanceofExpression temTar = (CBInstanceofExpression)tar;
+		MapUtil.addTokenMapping(tokenMap, type, temTar.getType(), nodemap, e);
+		expression.mapTokens(temTar.getExpression(), tokenMap, nodemap, e);
 	}
-
 	/* (non-Javadoc)
 	 * @see com.tomgu.entity.astnode.CBASTNode#toCBString()
 	 */
@@ -53,20 +49,17 @@ public class CBArrayAccess extends CBExpression {
 		// TODO Auto-generated method stub
 		return super.toCBString();
 	}
-
 	/**
-	 * @return the getArray
+	 * @return the expression
 	 */
-	public CBExpression getArray() {
-		return array;
+	public CBExpression getExpression() {
+		return expression;
 	}
-
 	/**
-	 * @return the getIndex
+	 * @return the type
 	 */
-	public CBExpression getIndex() {
-		return index;
+	public String getType() {
+		return type;
 	}
-
 
 }
