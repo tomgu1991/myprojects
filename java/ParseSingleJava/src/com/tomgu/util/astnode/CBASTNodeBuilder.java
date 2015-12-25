@@ -20,6 +20,10 @@ import org.eclipse.jdt.core.dom.ParenthesizedExpression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jdt.core.dom.SuperFieldAccess;
+import org.eclipse.jdt.core.dom.SuperMethodInvocation;
+import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
 import com.tomgu.entity.astnode.AbstractCBASTNode;
@@ -41,10 +45,15 @@ import com.tomgu.entity.astnode.expression.CBNumberLiteral;
 import com.tomgu.entity.astnode.expression.CBParenthesizedExpression;
 import com.tomgu.entity.astnode.expression.CBPostfixExpression;
 import com.tomgu.entity.astnode.expression.CBPrefixExpression;
+import com.tomgu.entity.astnode.expression.CBStringLiteral;
+import com.tomgu.entity.astnode.expression.CBSuperFieldAccess;
+import com.tomgu.entity.astnode.expression.CBSuperMethodInvocation;
+import com.tomgu.entity.astnode.expression.CBVariableDeclarationExpression;
 import com.tomgu.entity.astnode.statement.CBExpressionStatement;
 import com.tomgu.entity.astnode.statement.CBStatement;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
 import com.tomgu.property.GlobalProperty;
+import com.tomgu.util.MapUtil;
 
 public class CBASTNodeBuilder {
 	/**
@@ -117,6 +126,18 @@ public class CBASTNodeBuilder {
 			break;
 		case Expression.PREFIX_EXPRESSION:
 			result = new CBPrefixExpression((PrefixExpression) node);
+			break;
+		case Expression.STRING_LITERAL:
+			result = new CBStringLiteral((StringLiteral) node);
+			break;
+		case Expression.SUPER_FIELD_ACCESS:
+			result = new CBSuperFieldAccess((SuperFieldAccess) node);
+			break;
+		case Expression.SUPER_METHOD_INVOCATION:
+			result = new CBSuperMethodInvocation((SuperMethodInvocation) node);
+			break;
+		case Expression.VARIABLE_DECLARATION_EXPRESSION:
+			result = new CBVariableDeclarationExpression((VariableDeclarationExpression) node);
 			break;
 		default:
 			result = new CBExpression(node);
