@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
+import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
 import org.eclipse.jdt.core.dom.VariableDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
@@ -43,12 +44,21 @@ public class TestCBExpression {
 	private static void testBooleanLiteral(String filePath,
 			CompilationUnit cuRef, JavaParser parser) {
 		ASTNode nodeRef = parser.getMinCoveredASTNode(filePath, cuRef,
-				26);
+				27);
 		System.out.println(nodeRef.toString());
 		BooleanLiteral b =  (BooleanLiteral) ((Assignment) ((ExpressionStatement)nodeRef).getExpression()).getRightHandSide();
 		System.out.println(b.toString());
 		CBBooleanLiteral cbB = new CBBooleanLiteral(b);
 		System.out.println(cbB.toCBString());
+		
+		ExpressionStatement stmt = (ExpressionStatement)nodeRef;
+		StructuralPropertyDescriptor stmtlocation = stmt.getLocationInParent();
+		
+		Object stmtGet = stmt.getParent().getStructuralProperty(stmtlocation);
+		StructuralPropertyDescriptor blocation = b.getLocationInParent();
+		Object bGet = b.getParent().getStructuralProperty(blocation);
+		System.out.println(bGet.toString());
+		
 		
 	}
 
