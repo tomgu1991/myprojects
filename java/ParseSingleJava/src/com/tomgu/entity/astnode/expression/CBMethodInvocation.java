@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
-import com.tomgu.entity.astnode.variabledeclaration.CBVariableDeclaratrionFragment;
+import com.tomgu.entity.astnode.statement.variabledeclaration.CBVariableDeclaratrionFragment;
 import com.tomgu.util.MapUtil;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
 

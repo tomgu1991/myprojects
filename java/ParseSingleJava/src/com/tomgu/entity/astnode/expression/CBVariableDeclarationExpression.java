@@ -12,8 +12,9 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
-import com.tomgu.entity.astnode.variabledeclaration.CBVariableDeclaratrionFragment;
+import com.tomgu.entity.astnode.statement.variabledeclaration.CBVariableDeclaratrionFragment;
 import com.tomgu.util.MapUtil;
+import com.tomgu.util.astnode.CBASTNodeBuilder;
 
 /**
  * TODO need test
@@ -28,8 +29,12 @@ public class CBVariableDeclarationExpression extends CBExpression {
 		type = n.getType();
 		fragmentList = new ArrayList<>();
 		for(int i = 0;i<n.fragments().size();i++){
-			fragmentList.add(new CBVariableDeclaratrionFragment(
-					(VariableDeclarationFragment) n.fragments().get(i)));
+			fragmentList.add(
+					(CBVariableDeclaratrionFragment) CBASTNodeBuilder.build(
+							(VariableDeclarationFragment)n.fragments().get(i)));
+					
+//					new CBVariableDeclaratrionFragment(
+//					(VariableDeclarationFragment) n.fragments().get(i)));
 		}
 	}
 	/**
