@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.SimpleType;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
@@ -15,15 +14,19 @@ import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
 import com.tomgu.entity.astnode.CBASTNode;
 import com.tomgu.entity.astnode.statement.variabledeclaration.CBVariableDeclaratrionFragment;
-import com.tomgu.entity.astnode.visitor.CBVariableDeclarationStatementVisitor;
 import com.tomgu.util.MapUtil;
 
-public class CBVariableDeclarationStatement extends CBStatement {
+/**
+ * TODO need test
+ * @author guzuxing
+ *
+ */
+public class CBFiledDeclaration extends CBASTNode {
 	private Type type;
 	private List<CBVariableDeclaratrionFragment> fragmentList;
 //	private CBVariableDeclarationStatementVisitor visitor;
 	
-	public CBVariableDeclarationStatement(VariableDeclarationStatement n) {
+	public CBFiledDeclaration(FieldDeclaration n) {
 		super(n);
 		type = n.getType();
 		fragmentList = new ArrayList<>();
@@ -42,13 +45,13 @@ public class CBVariableDeclarationStatement extends CBStatement {
 	@Override
 	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
 			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
-		if(! (tar instanceof CBVariableDeclarationStatement) ){
+		if(! (tar instanceof CBFiledDeclaration) ){
 			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
 					,nodemap,e);
 			return;
 		}
 		
-		CBVariableDeclarationStatement tarTem = (CBVariableDeclarationStatement)tar;
+		CBFiledDeclaration tarTem = (CBFiledDeclaration)tar;
 		// map type
 		MapUtil.addTokenMapping(tokenMap, type.toString(), tarTem.getType().toString()
 				,nodemap,e);
@@ -93,5 +96,5 @@ public class CBVariableDeclarationStatement extends CBStatement {
 	}
 
 	
-	
+
 }

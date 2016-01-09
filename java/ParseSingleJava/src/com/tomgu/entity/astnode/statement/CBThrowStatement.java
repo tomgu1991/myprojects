@@ -3,9 +3,8 @@ package com.tomgu.entity.astnode.statement;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.Statement;
+import org.eclipse.jdt.core.dom.ThrowStatement;
 
 import com.tomgu.entity.ASTNodeMappingElement;
 import com.tomgu.entity.astnode.AbstractCBASTNode;
@@ -14,32 +13,44 @@ import com.tomgu.util.MapUtil;
 import com.tomgu.util.astnode.CBASTNodeBuilder;
 
 /**
- * TODO need test
+ * TODO need to test
  * @author guzuxing
  *
  */
-
-public class CBExpressionStatement extends CBStatement {
+public class CBThrowStatement extends CBStatement {
 	private CBExpression expression;
-	public CBExpressionStatement(ExpressionStatement n) {
+	
+	public CBThrowStatement(ThrowStatement n) {
 		super(n);
 		expression = (CBExpression) CBASTNodeBuilder.build(n.getExpression());
 	}
+
+	
+	
+	
+	
 	/* (non-Javadoc)
-	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map)
+	 * @see com.tomgu.entity.astnode.CBASTNode#mapTokens(com.tomgu.entity.astnode.AbstractCBASTNode, java.util.Map, java.util.Map, com.tomgu.entity.ASTNodeMappingElement)
 	 */
 	@Override
-	public void mapTokens(AbstractCBASTNode tar, Map<String,List> tokenMap,
-			Map<String,List<ASTNodeMappingElement>> nodemap, ASTNodeMappingElement e) {
-		if(! (tar instanceof CBExpressionStatement) ){
+	public void mapTokens(AbstractCBASTNode tar, Map<String, List> tokenMap,
+			Map<String, List<ASTNodeMappingElement>> nodemap,
+			ASTNodeMappingElement e) {
+		if(! (tar instanceof CBThrowStatement) ){
 			MapUtil.addTokenMapping(tokenMap,toCBString(),tar.toCBString()
 					,nodemap,e);
 			return;
 		}
 		
-		CBExpressionStatement tarTem = (CBExpressionStatement)tar;
-		expression.mapTokens(tarTem.getExpression(), tokenMap,nodemap,e);
+		CBThrowStatement tarTem = (CBThrowStatement)tar;
+		expression.mapTokens(tarTem.getExpression(), tokenMap, nodemap, e);
+	
 	}
+
+
+
+
+
 	/* (non-Javadoc)
 	 * @see com.tomgu.entity.astnode.CBASTNode#toCBString()
 	 */
@@ -48,6 +59,11 @@ public class CBExpressionStatement extends CBStatement {
 		// TODO Auto-generated method stub
 		return super.toCBString();
 	}
+
+
+
+
+
 	/**
 	 * @return the expression
 	 */
@@ -55,5 +71,6 @@ public class CBExpressionStatement extends CBStatement {
 		return expression;
 	}
 
+	
 	
 }

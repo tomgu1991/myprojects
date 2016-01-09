@@ -1,59 +1,12 @@
 package com.tomgu.util.astnode;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ArrayAccess;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.CastExpression;
-import org.eclipse.jdt.core.dom.CharacterLiteral;
-import org.eclipse.jdt.core.dom.ConditionalExpression;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.ExpressionStatement;
-import org.eclipse.jdt.core.dom.FieldAccess;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.InstanceofExpression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-import org.eclipse.jdt.core.dom.Name;
-import org.eclipse.jdt.core.dom.NullLiteral;
-import org.eclipse.jdt.core.dom.NumberLiteral;
-import org.eclipse.jdt.core.dom.ParenthesizedExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.StringLiteral;
-import org.eclipse.jdt.core.dom.SuperFieldAccess;
-import org.eclipse.jdt.core.dom.SuperMethodInvocation;
-import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
-import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.jdt.core.dom.*;
 
-import com.tomgu.entity.astnode.AbstractCBASTNode;
-import com.tomgu.entity.astnode.CBASTNode;
-import com.tomgu.entity.astnode.expression.CBArrayAccess;
-import com.tomgu.entity.astnode.expression.CBAssignment;
-import com.tomgu.entity.astnode.expression.CBBooleanLiteral;
-import com.tomgu.entity.astnode.expression.CBCastExpression;
-import com.tomgu.entity.astnode.expression.CBCharacterLiteral;
-import com.tomgu.entity.astnode.expression.CBConditionalExpression;
-import com.tomgu.entity.astnode.expression.CBExpression;
-import com.tomgu.entity.astnode.expression.CBFieldAccess;
-import com.tomgu.entity.astnode.expression.CBInfixExpression;
-import com.tomgu.entity.astnode.expression.CBInstanceofExpression;
-import com.tomgu.entity.astnode.expression.CBMethodInvocation;
-import com.tomgu.entity.astnode.expression.CBName;
-import com.tomgu.entity.astnode.expression.CBNullLiteral;
-import com.tomgu.entity.astnode.expression.CBNumberLiteral;
-import com.tomgu.entity.astnode.expression.CBParenthesizedExpression;
-import com.tomgu.entity.astnode.expression.CBPostfixExpression;
-import com.tomgu.entity.astnode.expression.CBPrefixExpression;
-import com.tomgu.entity.astnode.expression.CBStringLiteral;
-import com.tomgu.entity.astnode.expression.CBSuperFieldAccess;
-import com.tomgu.entity.astnode.expression.CBSuperMethodInvocation;
-import com.tomgu.entity.astnode.expression.CBVariableDeclarationExpression;
-import com.tomgu.entity.astnode.statement.CBExpressionStatement;
-import com.tomgu.entity.astnode.statement.CBStatement;
-import com.tomgu.entity.astnode.statement.CBVariableDeclarationStatement;
+import com.tomgu.entity.astnode.*;
+import com.tomgu.entity.astnode.expression.*;
+import com.tomgu.entity.astnode.statement.*;
+import com.tomgu.entity.astnode.statement.variabledeclaration.*;
 import com.tomgu.property.GlobalProperty;
-import com.tomgu.util.MapUtil;
 
 public class CBASTNodeBuilder {
 	/**
@@ -64,11 +17,68 @@ public class CBASTNodeBuilder {
 	private static CBStatement buildCBStatement(Statement node){
 		CBStatement result;
 		switch(node.getNodeType()){
-		case ASTNode.VARIABLE_DECLARATION_STATEMENT:
-			result = new CBVariableDeclarationStatement((VariableDeclarationStatement) node);
+		case ASTNode.ASSERT_STATEMENT:
+			result = new CBAssertStatement((AssertStatement) node);
+			break;
+		case ASTNode.BLOCK:
+			result = new CBBlock((Block) node);
+			break;
+		case ASTNode.BREAK_STATEMENT:
+			result = new CBBreakStatement((BreakStatement)node);
+			break;
+		case ASTNode.CONSTRUCTOR_INVOCATION:
+			result = new CBConstructorInvocation((ConstructorInvocation)node);
+			break;
+		case ASTNode.CONTINUE_STATEMENT:
+			result = new CBContinueStatemment((ContinueStatement) node);
+			break;
+		case ASTNode.DO_STATEMENT:
+			result = new CBDoStatement((DoStatement)node);
+			break;
+		case ASTNode.EMPTY_STATEMENT:
+			result = new CBEmptyStatement((EmptyStatement) node);
+			break;
+		case ASTNode.ENHANCED_FOR_STATEMENT:
+			result = new CBEnhancedForStatement((EnhancedForStatement) node);
 			break;
 		case ASTNode.EXPRESSION_STATEMENT:
 			result = new CBExpressionStatement((ExpressionStatement)node);
+			break;
+		case ASTNode.FOR_STATEMENT:
+			result = new CBForStatement((ForStatement)node);
+			break;
+		case ASTNode.IF_STATEMENT:
+			result = new CBIfStatement((IfStatement) node);
+			break;
+		case ASTNode.LABELED_STATEMENT:
+			result = new CBLabeledStatement((LabeledStatement)node);
+			break;
+		case ASTNode.RETURN_STATEMENT:
+			result = new CBReturnStatement((ReturnStatement) node);
+			break;
+		case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
+			result = new CBSuperConstrutorInvocation((SuperConstructorInvocation) node);
+			break;
+		case ASTNode.SWITCH_CASE:
+			result = new CBSwitchCase((SwitchCase) node);
+			break;
+		case ASTNode.SWITCH_STATEMENT:
+			result = new CBSwitchStatement((SwitchStatement) node);
+			break;
+		case ASTNode.SYNCHRONIZED_STATEMENT:
+			result = new CBSychronizedStatement((SynchronizedStatement) node);
+			break;
+		case ASTNode.THROW_STATEMENT:
+			result = new CBThrowStatement((ThrowStatement) node);
+			break;
+		case ASTNode.TRY_STATEMENT:
+			result = new CBTryStatement((TryStatement) node);
+			break;
+		case ASTNode.VARIABLE_DECLARATION_STATEMENT:
+			result = new CBVariableDeclarationStatement((VariableDeclarationStatement) node);
+			break;
+		case ASTNode.WHILE_STATEMENT:
+			result = new CBWhileStatement((WhileStatement) node);
 			break;
 		default:
 			result = new CBStatement(node);
@@ -149,6 +159,21 @@ public class CBASTNodeBuilder {
 	private static CBASTNode buildCBANode(ASTNode node){
 		CBASTNode result;
 		switch(node.getNodeType()){
+		case ASTNode.VARIABLE_DECLARATION_FRAGMENT:
+			result = new CBVariableDeclaratrionFragment((VariableDeclarationFragment)node);
+			break;
+		case ASTNode.SINGLE_VARIABLE_DECLARATION:
+			result = new CBSingleVariableDeclaration((SingleVariableDeclaration)node);
+			break;
+		case ASTNode.CATCH_CLAUSE:
+			result = new CBCatchClause((CatchClause) node);
+			break;
+		case ASTNode.FIELD_DECLARATION:
+			result = new CBFiledDeclaration((FieldDeclaration) node);
+			break;
+		case ASTNode.INITIALIZER:
+			result = new CBInitializer((Initializer) node);
+			break;
 		default:
 			result = new CBASTNode(node);
 		}
