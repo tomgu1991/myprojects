@@ -40,4 +40,15 @@ public class StringUtil {
 	 
 		return dp[len1][len2];
 	}
+	
+	/**
+	 * get string real content, remove blank space or \t
+	 * @param str
+	 * @return
+	 */
+	public static String getRealString(String str){
+		String result = str.trim();
+		result = result.replace("\t", "");
+		return result;
+	}
 }

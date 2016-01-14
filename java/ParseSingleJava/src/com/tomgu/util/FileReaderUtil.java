@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.tomgu.util.string.StringUtil;
+
 public class FileReaderUtil {
 	public static String readFileToString(String filePath){
 		String result = "";
@@ -58,9 +60,16 @@ public class FileReaderUtil {
 		try {
 			BufferedReader reader = new BufferedReader(new java.io.FileReader(filePath));
 			String line = "";
+			int offset = 0;
 			while ( (line=reader.readLine()) != null ){
-				if(lineFlag == lineNumber)
-					return result;
+				if(lineFlag == lineNumber){
+					for(int p=0;p<line.length();p++)
+						if(line.charAt(p) == ' ' || line.charAt(p) == '\t')
+							++offset;
+						else
+							break;
+					return result+offset;
+				}
 				result += line.toCharArray().length + 1;
 				lineFlag++;
 			}
@@ -85,7 +94,7 @@ public class FileReaderUtil {
 			while ( (line=reader.readLine()) != null ){
 				lineFlag++;
 				if(lineFlag == lineNumber)
-					return line.toCharArray().length;
+					return StringUtil.getRealString(line).toCharArray().length;
 			}
 		} catch (FileNotFoundException e) {
 			// 
